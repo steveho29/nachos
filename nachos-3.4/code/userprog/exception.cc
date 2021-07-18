@@ -126,6 +126,9 @@ void ExceptionHandler(ExceptionType which)
 {
 	int type = machine->ReadRegister(2);
 	
+
+	int op1, op2, result;
+
 	switch (which){
 		case NoException:
 			return;
@@ -144,17 +147,16 @@ void ExceptionHandler(ExceptionType which)
 
 
 				case SC_Sub:
-					int op1 = machine->ReadRegister(4);
-					int op2 = machine->ReadRegister(5);
-					int result = op1 - op2;
+					op1 = machine->ReadRegister(4);
+					op2 = machine->ReadRegister(5);
+					result = op1 - op2;
 					machine->WriteRegister(2, result);
-					interrupt->Halt();
 					break;
 
 
 				case SC_ReadString:
 					if (readString() == NULL)
-						printf("\nNot enought memory in systembrt");
+						printf("\nNot enought memory in system");
 					break;
 
 
