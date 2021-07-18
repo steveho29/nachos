@@ -165,7 +165,6 @@ void ExceptionHandler(ExceptionType which)
 					break;
 
 			} 
-			advancePC();
 			break;
 		}
 
@@ -173,6 +172,5 @@ void ExceptionHandler(ExceptionType which)
 			printf("Unexpected user mode exception %d %d\n", which, type);
 			ASSERT(FALSE);
 	}
-
-   
+	advancePC();
 }	
