@@ -50,7 +50,7 @@
 
 
 
-// registers, machine in machine.h
+// machine object is in machine.h
 void advancePC(){
 	machine->WriteRegister(PrevPCReg, machine->ReadRegister(PCReg));
     machine->WriteRegister(PCReg, machine->ReadRegister(NextPCReg));
@@ -58,6 +58,8 @@ void advancePC(){
 }
 
 
+
+//  Copy buffer from system memory to user memory
 int System2User(int virtAddr, int len, char* buffer)
 {
 	if (len < 0) return -1;
@@ -73,6 +75,8 @@ int System2User(int virtAddr, int len, char* buffer)
 	return i; // Number bytes copied
 }
 
+
+// Copy buffer from user memory to system memory
 char* User2System(int virtAddr, int limit){
 	int i;
 	int oneChar;
@@ -94,6 +98,8 @@ char* User2System(int virtAddr, int limit){
 	return kernelBuf;
 }
 
+
+
 char* readString(){
 	int size = machine->ReadRegister(5);
 	int virtAddr = machine->ReadRegister(4);
@@ -103,12 +109,13 @@ char* readString(){
 	return str;
 }
 
+
+
 void printString(){
 	int virtAddr = machine->ReadRegister(4);
 	char* buffer = User2System(virtAddr, 200);
 	gSynchConsole->Write(buffer, 200);
-
-
+}
 
 
 
@@ -156,14 +163,13 @@ void ExceptionHandler(ExceptionType which)
 					break;
 
 			}
-			advancePC();
 			break;
 		}
 
 		default:
 			printf("Unexpected user mode exception %d %d\n", which, type);
 			ASSERT(FALSE);
-
 	}
-    
-}
+	
+    advancePC();
+}	
