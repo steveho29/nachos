@@ -73,8 +73,8 @@ sub: sub.o start.o
 	../bin/coff2noff sub.coff sub
 
 
-printString.o: printString.c
+testReadPrintString.o: testReadPrintString.c
 	$(CC) $(CFLAGS) -c printString.c
-printString: printString.o start.o
-	$(LD) $(LDFLAGS) start.o printString.o -o printString.coff
-	../bin/coff2noff printString.coff printString
+testReadPrintString: testReadPrintString.o start.o
+	$(LD) $(LDFLAGS) start.o testReadPrintString.o -o testReadPrintString.coff
+	../bin/coff2noff testReadPrintString.coff testReadPrintString
