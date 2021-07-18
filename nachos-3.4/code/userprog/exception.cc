@@ -105,7 +105,7 @@ char* readString(){
 	int virtAddr = machine->ReadRegister(4);
 	char* str = NULL;
 	int numBytes = gSynchConsole->Read(str, size); // gSynchConsole khai bao trong system.h. Return so ki tu doc duoc
-	machine->System2User(virtAddr, numBytes,  str);
+	System2User(virtAddr, numBytes,  str);
 	return str;
 }
 
@@ -170,6 +170,6 @@ void ExceptionHandler(ExceptionType which)
 			printf("Unexpected user mode exception %d %d\n", which, type);
 			ASSERT(FALSE);
 	}
-	
+
     advancePC();
 }	
