@@ -52,9 +52,9 @@
 
 // registers, machine in machine.h
 void advancePC(){
-	machine->WriteRegister(PrevPCReg, registers[PCReg]);
-    machine->WriteRegister(PCReg, registers[NextPCReg]);
-    machine->WriteRegister(NextPCReg, registers[NextPCReg] + 4);
+	machine->WriteRegister(PrevPCReg, machine->ReadRegister(PCReg));
+    machine->WriteRegister(PCReg, machine->ReadRegister(NextPCReg));
+    machine->WriteRegister(NextPCReg, machine->ReadRegister(NextPCReg) + 4);
 }
 
 
@@ -107,7 +107,7 @@ void printString(){
 	int virtAddr = machine->ReadRegister(4);
 	char* buffer = User2System(virtAddr, 200);
 	gSynchConsole->Write(buffer, 200);
-}
+
 
 
 
@@ -153,8 +153,10 @@ void ExceptionHandler(ExceptionType which)
 
 				case SC_PrintString:
 					printString();
-			}
+					break;
 
+			}
+			advancePC();
 			break;
 		}
 
