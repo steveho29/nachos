@@ -139,6 +139,24 @@ Sub:
 	.end Sub
 
 
+	.globl PrintString
+	.ent   PrintString
+PrintString:
+	addiu $2,$0,SC_PrintString
+	syscall
+	j	$31
+	.end PrintString
+
+
+	.globl ReadString
+	.ent	ReadString
+ReadString:
+	addiu $2,$0,ReadString
+	syscall
+	j	$31
+	.end ReadString
+
+
 /* dummy function to keep gcc happy */
         .globl  __main
         .ent    __main

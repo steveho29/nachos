@@ -48,8 +48,74 @@
 //	are in machine.h.
 //----------------------------------------------------------------------
 
-void
-ExceptionHandler(ExceptionType which)
+
+
+// registers, machine in machine.h
+void advancePC(){
+	machine->WriteRegister(PrevPCReg, registers[PCReg]);
+    machine->WriteRegister(PCReg, registers[NextPCReg]);
+    machine->WriteRegister(NextPCReg, registers[NextPCReg] + 4);
+}
+
+
+int System2User(int virtAddr, int len, char* buffer)
+{
+	if (len < 0) return -1;
+	if (len == 0) return 0;
+	int i = 0;
+	int oneChar = 0;
+	do {
+		oneChar = (int)buffer[i];
+		machine->WriteMem(virtAddr+i, 1, oneChar); // WriteMem in translate.cc. Gan value vao machine->mainMemory[]
+		i++;
+	} while (i< len && oneChar != 0);
+
+	return i; // Number bytes copied
+}
+
+char* User2System(int virtAddr, int limit){
+	int i;
+	int oneChar;
+	char* kernelBuf = NULL;
+
+	kernelBuf = new char [limit+1];
+	if (kernelBuf == NULL)
+		return NULL;
+
+	memset(kernelBuf, 0, limit+1);
+
+	for (i = 0; i< limit;i++){
+		machine->ReadMem(virtAddr+i, 1, &oneChar);
+		kernelBuf[i] = (char)oneChar;
+		if (oneChar == 0)
+			break;
+	}
+	
+	return kernelBuf;
+}
+
+char* readString(){
+	int size = machine->ReadRegister(5);
+	int virtAddr = machine->ReadRegister(4);
+	char* str = NULL;
+	int numBytes = gSynchConsole->Read(str, size); // gSynchConsole khai bao trong system.h. Return so ki tu doc duoc
+	machine->System2User(virtAddr, numBytes,  str);
+	return str;
+}
+
+void printString(){
+	int virtAddr = machine->ReadRegister(4);
+	char* buffer = User2System(virtAddr, 200);
+	gSynchConsole->Write(buffer, 200);
+}
+
+
+
+
+
+
+
+void ExceptionHandler(ExceptionType which)
 {
 	int type = machine->ReadRegister(2);
 	
@@ -68,6 +134,8 @@ ExceptionHandler(ExceptionType which)
 					DEBUG('a', "Shutdown, initiated by user program.\n");
    					interrupt->Halt();
 					break;
+
+
 				case SC_Sub:
 					int op1 = machine->ReadRegister(4);
 					int op2 = machine->ReadRegister(5);
@@ -75,8 +143,18 @@ ExceptionHandler(ExceptionType which)
 					machine->WriteRegister(2, result);
 					interrupt->Halt();
 					break;
-				
+
+
+				case SC_ReadString:
+					if (readString() == NULL)
+						printf("\nNot enought memory in systembrt");
+					break;
+
+
+				case SC_PrintString:
+					printString();
 			}
+
 			break;
 		}
 
