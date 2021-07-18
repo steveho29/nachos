@@ -1,9 +1,6 @@
 #include "syscall.h"
 
 int main(){
-	char* str = NULL;
-	ReadString(str, 200);
-	PrintString("Your String: ");
-	PrintString(str);
+	PrintString("Hello World I am Minh Duc");
 	Halt();
 }

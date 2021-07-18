@@ -140,7 +140,6 @@ Sub:
 	.end Sub
 
 
-
 	.globl PrintString
 	.ent   PrintString
 PrintString:
@@ -148,7 +147,6 @@ PrintString:
 	syscall
 	j	$31
 	.end PrintString
-
 
 
 	.globl ReadString

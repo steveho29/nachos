@@ -164,7 +164,8 @@ void ExceptionHandler(ExceptionType which)
 					printString();
 					break;
 
-			}
+			} 
+			advancePC();
 			break;
 		}
 
@@ -173,5 +174,5 @@ void ExceptionHandler(ExceptionType which)
 			ASSERT(FALSE);
 	}
 
-    advancePC();
+   
 }	
