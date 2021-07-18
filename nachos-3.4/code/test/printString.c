@@ -5,5 +5,5 @@ int main(){
 	ReadString(str, 200);
 	PrintString("Your String: ");
 	PrintString(str);
-	return 0;
+	Halt();
 }
