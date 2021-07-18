@@ -103,7 +103,7 @@ char* User2System(int virtAddr, int limit){
 char* readString(){
 	int size = machine->ReadRegister(5);
 	int virtAddr = machine->ReadRegister(4);
-	char* str = NULL;
+	char* str = User2System(virtAddr, size);
 	int numBytes = gSynchConsole->Read(str, size); // gSynchConsole khai bao trong system.h. Return so ki tu doc duoc
 	System2User(virtAddr, numBytes,  str);
 	return str;
