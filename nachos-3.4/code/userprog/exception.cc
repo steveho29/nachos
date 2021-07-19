@@ -181,8 +181,8 @@ void printChar(){
 int readInt(){
 	int num = 0, digit, numBytes, limit = 200;
 
-	long MAX_INT = 2147483647, MIN_INT = -2147483648;
-	long tmp = 0;
+	int MAX_INT = 2147483647, MIN_INT = -2147483648;
+	long long tmp = 0;
 	char* buffer;
 	bool isNegative = false;
 
@@ -219,7 +219,7 @@ int readInt(){
 		tmp = tmp * 10 + digit;
 
 		// Check overflow integer
-		if ((tmp > MAX_INT && isNegative == false) || (-tmp < MIN_INT && isNegative == true))
+		if ((tmp > MAX_INT && !isNegative) || (-tmp < MIN_INT && isNegative))
 		{
 			printf("Integer Overflow\n\n");
 			return 0;
