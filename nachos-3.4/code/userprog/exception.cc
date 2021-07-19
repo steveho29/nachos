@@ -230,7 +230,6 @@ int readInt(){
 
 	if (isNegative)
 		num = -num;
-	
 
 	// Giai phong buffer
 	delete buffer;
@@ -384,7 +383,7 @@ void ExceptionHandler(ExceptionType which)
 					printInt();
 					break;
 			} 
-			
+
 			advancePC();
 			break;
 		}

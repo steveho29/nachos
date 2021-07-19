@@ -21,8 +21,12 @@ int main()
         return 0;
     }
 
-    for (i = 0; i<n; i++)
+    for (i = 0; i<n; i++){
+        PrintString("A[");
+        PrintChar(((char)i+48));
+        PrintString("] = ");
         A[i] = ReadInt();
+    }
     
 
     // Bubble sort
