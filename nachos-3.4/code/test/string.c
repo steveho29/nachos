@@ -5,6 +5,6 @@ int main(){
 	ReadString(str, 200);
 	PrintString("My string: ");
 	PrintString(str);
-	PrintString('\n\n')
+	PrintString('\n\n');
 	Halt();
 }
