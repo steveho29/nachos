@@ -102,7 +102,7 @@ char* User2System(int virtAddr, int limit){
 
 
 char* readString(){
-	int virtAddr, limit, numBytes
+	int virtAddr, limit, numBytes;
 	char* str;
 
 	// Địa chỉ lưu chuỗi của user
@@ -114,7 +114,7 @@ char* readString(){
 	// Đọc chuỗi từ console vào str 
 	// Lấy ra so ki tu doc duoc
 	str = new char [limit+1];
-	numBytes = gSynchConsole->Read(str, limit)
+	numBytes = gSynchConsole->Read(str, limit);
 
 	// Copy buffer từ system vào user với số byte = numBytes đọc được từ console
 	System2User(virtAddr, numBytes,  str); 
