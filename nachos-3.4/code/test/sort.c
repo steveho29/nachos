@@ -6,27 +6,23 @@
  *    Ideally, we could read the unsorted array off of the file system,
  *	and store the result back to the file system!
  */
-
+int A[1024];
 #include "syscall.h"
 
 
 int main()
 {   
-    int n, i, j, *A;
+    int n, i, j, tmp;
     PrintString("Input N <= 100: ");
     n = ReadInt();
-    if (n > 0)
-        A = new int[n];
-    else
+    if (n <= 0)
     {
         Halt();
         return 0;
     }
 
-    for (int i = 0; i<n; i++){
-        int num = ReadInt();
-        A[i] = num;
-    }
+    for (i = 0; i<n; i++)
+        A[i] = ReadInt();
     
 
     // Bubble sort
@@ -34,13 +30,12 @@ int main()
         for (j = 0; j<n-i-1; j++){
             if (A[j] > A[j+1])
             {
-                int tmp = A[j];
+                tmp = A[j];
                 A[j] = A[j+1];
                 A[j+1] = tmp;
             }
         }
     
-
 
     // Output sorted Array
     PrintString("Sorted Array: ");
