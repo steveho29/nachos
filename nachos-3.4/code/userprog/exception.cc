@@ -135,6 +135,9 @@ void printString(){
 
 	// In ra man hinh console
 	gSynchConsole->Write(buffer, 200);
+
+	// Delete buffer tranh leak memory
+	delete buffer;
 }
 
 
