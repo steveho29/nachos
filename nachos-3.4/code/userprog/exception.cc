@@ -179,7 +179,7 @@ void printChar(){
 
 
 int readInt(){
-	int num = 0, digit, numBytes, limit = 200
+	int num = 0, digit, numBytes, limit = 200;
 
 	long MAX_INT = 2147483647, MIN_INT = -2147483648;
 	long tmp = 0;
