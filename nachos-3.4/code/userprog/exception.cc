@@ -102,16 +102,19 @@ char* User2System(int virtAddr, int limit){
 
 
 char* readString(){
+	int virtAddr, limit, numBytes
+	char* str;
+
 	// Địa chỉ lưu chuỗi của user
-	int virtAddr = machine->ReadRegister(4); 
+	virtAddr = machine->ReadRegister(4); 
 
 	// Độ dài chuỗi user chọn
-	int limit = machine->ReadRegister(5);
+	limit = machine->ReadRegister(5);
 
 	// Đọc chuỗi từ console vào str 
-	// Return so ki tu doc duoc
-	char* str = new char [limit+1];
-	int numBytes = gSynchConsole->Read(str, limit)
+	// Lấy ra so ki tu doc duoc
+	str = new char [limit+1];
+	numBytes = gSynchConsole->Read(str, limit)
 
 	// Copy buffer từ system vào user với số byte = numBytes đọc được từ console
 	System2User(virtAddr, numBytes,  str); 
@@ -121,9 +124,15 @@ char* readString(){
 
 
 void printString(){
-	int virtAddr = machine->ReadRegister(4); // Lấy địa chỉ lưu chuỗi của user
+	int virtAddr;
+	char* buffer;
+
+	// Lấy địa chỉ lưu chuỗi của user
+	virtAddr = machine->ReadRegister(4);
+
 	// Khởi tạo kernel buffer. Copy chuỗi từ user sang kernel buffer
-	char* buffer = User2System(virtAddr, 200); 
+	buffer = User2System(virtAddr, 200); 
+
 	// In ra màn hình console
 	gSynchConsole->Write(buffer, 200);
 }
