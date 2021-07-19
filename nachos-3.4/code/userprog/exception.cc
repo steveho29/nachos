@@ -141,7 +141,7 @@ void printString(){
 
 char readChar(){
 	int virtAddr, limit = 200, numBytes;
-	char* buffer, ch = '';
+	char* buffer, ch = '\0';
 
 	// Lay dia chi luu ki tu cua USER
 	virtAddr = machine->ReadRegister(4);
@@ -239,10 +239,7 @@ void ExceptionHandler(ExceptionType which)
 				case SC_ReadChar:
 					char ch;
 					ch = readChar();
-					if (ch)
-						machine->WriteRegister(2, ch);
-					else
-						machine->WriteRegister(2, 0);
+					machine->WriteRegister(2, ch);
 					break;
 
 
