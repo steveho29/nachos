@@ -101,13 +101,16 @@ char* User2System(int virtAddr, int limit){
 
 
 char* readString(){
-	int virtAddr = machine->ReadRegister(4); // Địa chỉ lưu chuỗi của user
-	int size = machine->ReadRegister(5); // Độ dài chuỗi user chọn
-	char* str = new char [size+1];
+	// Địa chỉ lưu chuỗi của user
+	int virtAddr = machine->ReadRegister(4); 
+
+	// Độ dài chuỗi user chọn
+	int limit = machine->ReadRegister(5);
 
 	// Đọc chuỗi từ console vào str 
 	// Return so ki tu doc duoc
-	int numBytes = gSynchConsole->Read(str, size)
+	char* str = new char [limit+1];
+	int numBytes = gSynchConsole->Read(str, limit)
 
 	// Copy buffer từ system vào user với số byte = numBytes đọc được từ console
 	System2User(virtAddr, numBytes,  str); 
@@ -118,7 +121,8 @@ char* readString(){
 
 void printString(){
 	int virtAddr = machine->ReadRegister(4); // Lấy địa chỉ lưu chuỗi của user
-	char* buffer = User2System(virtAddr, 200); // Khởi tạo kernel buffer
+	// Khởi tạo kernel buffer. Copy chuỗi từ user sang kernel buffer
+	char* buffer = User2System(virtAddr, 200); 
 	gSynchConsole->Write(buffer, 200);
 }
 
@@ -132,7 +136,6 @@ void ExceptionHandler(ExceptionType which)
 	int type = machine->ReadRegister(2);
 	
 
-	int op1, op2, result;
 
 	switch (which){
 		case NoException:
@@ -152,6 +155,7 @@ void ExceptionHandler(ExceptionType which)
 
 
 				case SC_Sub:
+					int op1, op2, result;
 					op1 = machine->ReadRegister(4);
 					op2 = machine->ReadRegister(5);
 					result = op1 - op2;
