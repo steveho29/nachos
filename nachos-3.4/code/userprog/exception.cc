@@ -179,7 +179,9 @@ void printChar(){
 
 
 int readInt(){
-	int num = 0, digit, numBytes, limit = 200, MAX = 2147483647, MIN = -2147483648;
+	int num = 0, digit, numBytes, limit = 200
+
+	long MAX_INT = 2147483647, MIN_INT = -2147483648;
 	long tmp = 0;
 	char* buffer;
 	bool isNegative = false;
@@ -208,7 +210,7 @@ int readInt(){
 
 		// Ki tu khong phai chu so
 		if ('9' < buffer[i] || buffer[i] < '0' ){
-			printf("Invalid INT\n\n");
+			printf("Invalid Integer\n\n");
 			return 0;
 		}
 
@@ -217,7 +219,7 @@ int readInt(){
 		tmp = tmp * 10 + digit;
 
 		// Check overflow integer
-		if ((tmp > MAX && !isNegative) || (-tmp < MIN && isNegative))
+		if ((tmp > MAX_INT && !isNegative) || (-tmp < MIN_INT && isNegative))
 		{
 			printf("Integer Overflow\n\n");
 			return 0;
