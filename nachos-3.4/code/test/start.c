@@ -186,7 +186,6 @@ PrintInt:
 	j	$31
 	.end PrintInt
 
-
 /* dummy function to keep gcc happy */
         .globl  __main
         .ent    __main
