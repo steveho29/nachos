@@ -141,7 +141,7 @@ Sub:
 	.globl PrintString
 	.ent   PrintString
 PrintString:
-	addiu $2,$0,SC_PrintStrings
+	addiu $2,$0,SC_PrintString
 	syscall
 	j	$31
 	.end PrintString
