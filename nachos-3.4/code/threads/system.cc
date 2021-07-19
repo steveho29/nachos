@@ -148,9 +148,10 @@ Initialize(int argc, char **argv)
     interrupt->Enable();
     CallOnUserAbort(Cleanup);			// if user hits ctl-C
     
+gSynchConsole = new SynchConsole();
+
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
-    gSynchConsole = new SynchConsole();
 #endif
 
 #ifdef FILESYS
@@ -170,8 +171,7 @@ Initialize(int argc, char **argv)
 // Cleanup
 // 	Nachos is halting.  De-allocate global data structures.
 //----------------------------------------------------------------------
-void
-Cleanup()
+void Cleanup()
 {
     printf("\nCleaning up...\n");
 #ifdef NETWORK
