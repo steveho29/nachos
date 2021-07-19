@@ -241,11 +241,12 @@ int readInt(){
 
 
 
-void printInt(int num){
+void printInt(){
+	int num = machine->ReadRegister(4);
 	// Neu la sp duong lon hon 0
 	if (0 <= num && num <= 9)
 	{
-		printChar((char)(num+48));
+		gSynchConsole->Write(&(char)(num+48), 1);
 		return;
 	}
 
