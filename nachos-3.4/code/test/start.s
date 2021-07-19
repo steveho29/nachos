@@ -146,6 +146,7 @@ PrintString:
 	j	$31
 	.end PrintString
 
+
 	.globl ReadString
 	.ent	ReadString
 ReadString:
