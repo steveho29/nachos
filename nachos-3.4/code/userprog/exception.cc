@@ -174,9 +174,7 @@ char readChar(){
 
 void printChar(){
 	char ch = (char)machine->ReadRegister(4);
-
-	if (gSynchConsole->Write(&ch, 1))
-		printf("Console ERROR\n\n");
+	gSynchConsole->Write(&ch, 1);
 }
 
 
@@ -188,6 +186,7 @@ int readInt(){
 
 
 	// Doc chuoi vao buffer
+	buffer = new char[limit+1];
 	numBytes = gSynchConsole->Read(buffer, limit);
 	if (numBytes == 0) 
 		return 0;
