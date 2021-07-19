@@ -148,10 +148,9 @@ Initialize(int argc, char **argv)
     interrupt->Enable();
     CallOnUserAbort(Cleanup);			// if user hits ctl-C
     
-gSynchConsole = new SynchConsole();
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg); // this must come first
-	// gSynchConsole = new SynchConsole();
+	gSynchConsole = new SynchConsole();
     	
 #endif
 

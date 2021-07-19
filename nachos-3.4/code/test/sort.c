@@ -9,24 +9,41 @@
 
 #include "syscall.h"
 
-int A[1024];	/* size of physical memory; with code, we'll run out of space!*/
 
-int
-main()
-{
-    int i, j, tmp;
+int main()
+{   
+    int n, *A;
+    PrintString("Input N <= 100: ");
+    n = ReadInt();
+    if (n > 0)
+        A = new int[n];
+    else
+    {
+        Halt();
+        return 0;
+    }
 
-    /* first initialize the array, in reverse sorted order */
-    for (i = 0; i < 1024; i++)		
-        A[i] = 1024 - i;
+    for (int i = 0; i<n; i++)
+        A[i] = ReadInt();
+    
 
-    /* then sort! */
-    for (i = 0; i < 1023; i++)
-        for (j = i; j < (1023 - i); j++)
-	   if (A[j] > A[j + 1]) {	/* out of order -> need to swap ! */
-	      tmp = A[j];
-	      A[j] = A[j + 1];
-	      A[j + 1] = tmp;
-    	   }
-    Exit(A[0]);		/* and then we're done -- should be 0! */
+    // Bubble sort
+    for (int i = 0; i<n-1; i++){
+        for (int j = 0; j<n-i-1; j++)
+            if (A[j] > A[j+1])
+            {
+                int tmp = A[j];
+                A[j] = A[j+1];
+                A[j+1] = tmp;
+            }
+    }
+
+
+    // Output sorted Array
+    PrintString("Sorted Array: ");
+    for (int i = 0; i<n; i++){
+        PrintInt(A[i]);
+        PrintChar(' ');
+    }
+    Halt();
 }

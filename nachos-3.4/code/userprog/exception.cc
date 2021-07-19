@@ -338,7 +338,7 @@ void ExceptionHandler(ExceptionType which)
 				case SC_Halt:
 					DEBUG('a', "Shutdown, initiated by user program.\n");
    					interrupt->Halt();
-					break;
+					return;
 
 
 				case SC_Sub:
@@ -384,6 +384,7 @@ void ExceptionHandler(ExceptionType which)
 					printInt();
 					break;
 			} 
+			
 			advancePC();
 			break;
 		}
