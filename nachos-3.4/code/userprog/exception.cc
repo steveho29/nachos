@@ -228,9 +228,7 @@ int readInt(){
 
 	if (isNegative)
 		num = -num;
-
-	// Ghi ket qua
-	machine->WriteRegister(2, num);
+	
 
 	// Giai phong buffer
 	delete buffer;
@@ -374,7 +372,9 @@ void ExceptionHandler(ExceptionType which)
 
 
 				case SC_ReadInt:
-					readInt();
+					int num;
+					num = readInt();
+					machine->WriteRegister(2, num);
 					break;
 
 
