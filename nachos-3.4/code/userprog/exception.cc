@@ -242,7 +242,7 @@ void ExceptionHandler(ExceptionType which)
 				case SC_ReadChar:
 					char ch;
 					ch = readChar();
-					machine->WriteRegister(2, ch);
+					machine->WriteRegister(2, int(ch));
 					break;
 
 
