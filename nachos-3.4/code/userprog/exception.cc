@@ -103,9 +103,9 @@ char* User2System(int virtAddr, int limit){
 char* readString(){
 	int virtAddr = machine->ReadRegister(4); 
 	int size = machine->ReadRegister(5); 
-	// char* str = User2System(virtAddr, size); 
-	char* str = new char[size+1];
-	int numBytes = gSynchConsole->Read(str, size); 
+	char* str = User2System(virtAddr, size); 
+	// char* str = new char[size+1];
+	// int numBytes = gSynchConsole->Read(str, size); 
 	return str;
 }
 
