@@ -101,19 +101,20 @@ char* User2System(int virtAddr, int limit){
 
 
 char* readString(){
-	int size = machine->ReadRegister(5);
-	int virtAddr = machine->ReadRegister(4);
-	char* str = User2System(virtAddr, size);
-	int numBytes = gSynchConsole->Read(str, size); // gSynchConsole khai bao trong system.h. Return so ki tu doc duoc
-	System2User(virtAddr, numBytes,  str);
+	int virtAddr = machine->ReadRegister(4); // Địa chỉ lưu chuỗi của user
+	int size = machine->ReadRegister(5); // Độ dài chuỗi user chọn
+	// char* str = User2System(virtAddr, size); // Copy chuỗi user sang kernel space
+	char* str = new char[size+1];
+	int numBytes = gSynchConsole->Read(str, size); // Đọc chuỗi từ console vào kernel buffer. gSynchConsole khai bao trong system.h. Return so ki tu doc duoc
+	System2User(virtAddr, numBytes,  str); // Copy buffer từ system vào user
 	return str;
 }
 
 
 
 void printString(){
-	int virtAddr = machine->ReadRegister(4);
-	char* buffer = User2System(virtAddr, 200);
+	int virtAddr = machine->ReadRegister(4); // Lấy địa chỉ lưu chuỗi của user
+	char* buffer = User2System(virtAddr, 200); // Khởi tạo kernel buffer
 	gSynchConsole->Write(buffer, 200);
 }
 
@@ -165,6 +166,7 @@ void ExceptionHandler(ExceptionType which)
 					break;
 
 			} 
+			advancePC();
 			break;
 		}
 
@@ -172,5 +174,6 @@ void ExceptionHandler(ExceptionType which)
 			printf("Unexpected user mode exception %d %d\n", which, type);
 			ASSERT(FALSE);
 	}
-	advancePC();
+
+   
 }	
