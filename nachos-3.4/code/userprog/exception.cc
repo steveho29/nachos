@@ -68,7 +68,8 @@ int System2User(int virtAddr, int len, char* buffer)
 	int oneChar = 0;
 	do {
 		oneChar = (int)buffer[i];
-		machine->WriteMem(virtAddr+i, 1, oneChar); // WriteMem in translate.cc. Gan value vao machine->mainMemory[]
+		// WriteMem in translate.cc. Gan value vao machine->mainMemory[]
+		machine->WriteMem(virtAddr+i, 1, oneChar); 
 		i++;
 	} while (i< len && oneChar != 0);
 
@@ -123,6 +124,7 @@ void printString(){
 	int virtAddr = machine->ReadRegister(4); // Lấy địa chỉ lưu chuỗi của user
 	// Khởi tạo kernel buffer. Copy chuỗi từ user sang kernel buffer
 	char* buffer = User2System(virtAddr, 200); 
+	// In ra màn hình console
 	gSynchConsole->Write(buffer, 200);
 }
 
