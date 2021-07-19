@@ -373,12 +373,12 @@ void ExceptionHandler(ExceptionType which)
 					break;
 
 
-				case SC_ReadInt():
+				case SC_ReadInt:
 					readInt();
 					break;
 
 
-				case SC_PrintInt():
+				case SC_PrintInt:
 					printInt();
 					break;
 			} 
