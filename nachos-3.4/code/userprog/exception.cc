@@ -219,7 +219,7 @@ int readInt(){
 		tmp = tmp * 10 + digit;
 
 		// Check overflow integer
-		if ((tmp > MAX_INT && !isNegative) || (-tmp < MIN_INT && isNegative))
+		if ((tmp > MAX_INT && isNegative == false) || (-tmp < MIN_INT && isNegative == true))
 		{
 			printf("Integer Overflow\n\n");
 			return 0;
