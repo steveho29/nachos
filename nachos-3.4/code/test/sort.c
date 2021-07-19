@@ -12,7 +12,7 @@
 
 int main()
 {   
-    int n, *A;
+    int n, i, j, *A;
     PrintString("Input N <= 100: ");
     n = ReadInt();
     if (n > 0)
@@ -30,8 +30,8 @@ int main()
     
 
     // Bubble sort
-    for (int i = 0; i<n-1; i++)
-        for (int j = 0; j<n-i-1; j++){
+    for (i = 0; i<n-1; i++)
+        for (j = 0; j<n-i-1; j++){
             if (A[j] > A[j+1])
             {
                 int tmp = A[j];
@@ -44,7 +44,7 @@ int main()
 
     // Output sorted Array
     PrintString("Sorted Array: ");
-    for (int i = 0; i<n; i++){
+    for (i = 0; i<n; i++){
         PrintInt(A[i]);
         PrintString(" ");
     }
