@@ -139,6 +139,34 @@ void printString(){
 
 
 
+char readChar(){
+	int virtAddr, limit = 200, numBytes;
+	char* buffer, ch = '';
+
+	// Lay dia chi luu ki tu cua USER
+	virtAddr = machine->ReadRegister(4);
+
+	// Doc chuoi tu console
+	buffer = new char [limit+1];
+	numBytes = gSynchConsole->Read(buffer, limit);
+
+
+	if (numBytes == 1)
+		ch = buffer[0];
+	
+	// Delete buffer tranh leak memory
+	delete buffer;
+	return ch;
+}
+
+
+void printChar(){
+	char ch = (char)machine->ReadRegister(4);
+	gSynchConsole->Write(&ch, 1);
+}
+
+
+
 
 
 
@@ -155,7 +183,30 @@ void ExceptionHandler(ExceptionType which)
 			printf("PageFaultException dang dien ra\n");
 			interrupt->Halt();
 			break;
-		
+		case ReadOnlyException:
+			printf("ReadOnlyException dang dien ra\n");
+			interrupt->Halt();
+			break;
+		case BusErrorException:
+			printf("BusErrorException dang dien ra\n");
+			interrupt->Halt();
+			break;
+		case AddressErrorException:
+			printf("AddressErrorException dang dien ra\n");
+			interrupt->Halt();
+			break;
+		case OverflowException:
+			printf("OverflowException dang dien ra\n");
+			interrupt->Halt();
+			break;
+		case IllegalInstrException:
+			printf("IllegalInstrException dang dien ra\n");
+			interrupt->Halt();
+			break;
+		case NumExceptionTypes:
+			printf("NumExceptionTypes dang dien ra\n");
+			interrupt->Halt();
+			break;
 		case SyscallException:
 		{
 			switch (type){
@@ -184,6 +235,20 @@ void ExceptionHandler(ExceptionType which)
 					printString();
 					break;
 
+
+				case SC_ReadChar:
+					char ch;
+					ch = readChar();
+					if (ch != '')
+						machine->WriteRegister(2, ch);
+					else
+						machine->WriteRegister(2, 0);
+					break;
+
+
+				case SC_PrintChar:
+					printChar();
+					break;
 			} 
 			advancePC();
 			break;

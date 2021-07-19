@@ -30,8 +30,10 @@
 #define SC_Fork		9
 #define SC_Yield	10
 #define SC_Sub		11
-#define SC_ReadString 12
-#define SC_PrintString 13
+#define SC_ReadString   12
+#define SC_PrintString  13
+#define SC_ReadChar     14
+#define SC_PrintChar    15
 
 #ifndef IN_ASM
 
@@ -132,6 +134,10 @@ int Sub(int a, int b);
 void ReadString (char buffer [], int length);
 
 void PrintString (char buffer []);
+
+char ReadChar();
+
+void PrintChar(char ch);
 
 #endif /* IN_ASM */
 
