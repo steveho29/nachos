@@ -239,7 +239,7 @@ void ExceptionHandler(ExceptionType which)
 				case SC_ReadChar:
 					char ch;
 					ch = readChar();
-					if (ch != '')
+					if (ch)
 						machine->WriteRegister(2, ch);
 					else
 						machine->WriteRegister(2, 0);
