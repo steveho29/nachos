@@ -116,15 +116,19 @@ char* readString(){
 	str = new char [limit+1];
 	numBytes = gSynchConsole->Read(str, limit);
 
-	// Copy buffer tu System vao User voi so byte = numBytes doc duoc tu console
-	System2User(virtAddr, numBytes,  str); 
+	if (numBytes >= 0)
+		// Copy buffer tu System vao User voi so byte = numBytes doc duoc tu console
+		System2User(virtAddr, numBytes,  str);
+	else
+		printf("Console ERROR\n\n");
+
 	return str;
 }
 
 
 
 void printString(){
-	int virtAddr;
+	int virtAddr, numBytes;
 	char* buffer;
 
 	// Lay dia chi luu chuoi cua USER
@@ -153,10 +157,15 @@ char readChar(){
 	buffer = new char [limit+1];
 	numBytes = gSynchConsole->Read(buffer, limit);
 
-
+	// Check If A Valid Char
 	if (numBytes == 1)
 		ch = buffer[0];
+	else if (numBytes > 1)
+		printf("Invalid Char\n\n");
+	else
+		printf('Console ERROR\n\n');
 	
+
 	// Delete buffer tranh leak memory
 	delete buffer;
 	return ch;
@@ -165,11 +174,123 @@ char readChar(){
 
 void printChar(){
 	char ch = (char)machine->ReadRegister(4);
-	gSynchConsole->Write(&ch, 1);
+
+	if (gSynchConsole->Write(&ch, 1))
+		printf('Console ERROR\n\n');
+}
+
+
+int readInt(){
+	int num = 0, digit, numBytes, limit = 200, MAX = 2147483647, MIN = -2147483648;
+	long tmp = 0;
+	char* buffer;
+	bool isNegative = false;
+
+
+	// Doc chuoi vao buffer
+	numBytes = gSynchConsole->Read(buffer, limit);
+	if (numBytes == 0) 
+		return 0;
+
+	int i = 0;
+
+	// Skip khoang trang truoc chu so
+	for (;i<numBytes && buffer[i] == ' ';i++);
+
+
+	// Check neu la so am
+	if (buffer[i] == '-')
+	{
+		isNegative = true;
+		++i;
+	}
+
+	for (;i<numBytes;i++){
+
+		// Ki tu khong phai chu so
+		if ('9' < buffer[i] || buffer[i] < '0' ){
+			printf("Invalid INT\n\n");
+			return 0;
+		}
+
+		digit = (int)(buffer[i] - 48);
+
+		tmp = tmp * 10 + digit;
+
+		// Check overflow integer
+		if (tmp > MAX && !isNegative || -tmp < MIN && isNegative)
+		{
+			printf("Integer Overflow\n\n");
+			return 0;
+		}
+
+		num = num * 10 + digit;
+	}
+
+	if (isNegative)
+		num = -num;
+
+	// Ghi ket qua
+	machine->WriteRegister(2, num);
+
+	// Giai phong buffer
+	delete buffer;
+
+	return num;
 }
 
 
 
+void printInt(int num){
+	// Neu la sp duong lon hon 0
+	if (0 <= num && num <= 9)
+	{
+		printChar((char)(num+48));
+		return;
+	}
+
+	// max number digits of integer = 10 (MAX_INT = 2^31-1 = 2147483647)
+	int limit = 10;
+
+	// number of digits
+	int n = 0;
+
+	char* buffer = new char[limit+1];
+	bool isNegative = false;
+
+	if (num < 0){
+		isNegative = true;
+		num = -num;
+	}
+
+	while (num > 0){
+		buffer[n] = (char)(num%10 + 48);
+		num /= 10;
+		++n;
+	}
+
+
+	int i = 0;
+	char* number;
+	if (isNegative)
+	{	
+		++n;
+		++i;
+		number = new char[n+1];
+		number[0] = '-';
+	}
+	else number = new char[n+1];
+
+	for (;i<n;i++)
+		number[i] = buffer[n-i-1];
+
+
+	// In ra man hinh console
+	gSynchConsole->Write(number, n);
+
+	delete buffer;
+	delete number;
+}
 
 
 
@@ -248,6 +369,16 @@ void ExceptionHandler(ExceptionType which)
 
 				case SC_PrintChar:
 					printChar();
+					break;
+
+
+				case SC_ReadInt():
+					readInt();
+					break;
+
+
+				case SC_PrintInt():
+					printInt();
 					break;
 			} 
 			advancePC();
