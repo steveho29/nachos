@@ -45,7 +45,7 @@ int main()
     PrintString("Sorted Array: ");
     for (int i = 0; i<n; i++){
         PrintInt(A[i]);
-        PrintChar(' ');
+        PrintString(" ");
     }
     Halt();
 }
