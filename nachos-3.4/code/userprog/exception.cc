@@ -218,7 +218,7 @@ int readInt(){
 		tmp = tmp * 10 + digit;
 
 		// Check overflow integer
-		if (tmp > MAX && !isNegative || -tmp < MIN && isNegative)
+		if ((tmp > MAX && !isNegative) || (-tmp < MIN && isNegative))
 		{
 			printf("Integer Overflow\n\n");
 			return 0;
@@ -245,8 +245,9 @@ void printInt(){
 	int num = machine->ReadRegister(4);
 	// Neu la sp duong lon hon 0
 	if (0 <= num && num <= 9)
-	{
-		gSynchConsole->Write(&(char)(num+48), 1);
+	{	
+		char ch = (char)(num+48);
+		gSynchConsole->Write(&ch, 1);
 		return;
 	}
 
