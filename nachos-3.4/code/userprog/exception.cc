@@ -163,7 +163,7 @@ char readChar(){
 	else if (numBytes > 1)
 		printf("Invalid Char\n\n");
 	else
-		printf('Console ERROR\n\n');
+		printf("Console ERROR\n\n");
 	
 
 	// Delete buffer tranh leak memory
@@ -176,7 +176,7 @@ void printChar(){
 	char ch = (char)machine->ReadRegister(4);
 
 	if (gSynchConsole->Write(&ch, 1))
-		printf('Console ERROR\n\n');
+		printf("Console ERROR\n\n");
 }
 
 
