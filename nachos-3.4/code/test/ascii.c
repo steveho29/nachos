@@ -2,7 +2,8 @@
 
 void intToHex(int a){
 	char hex[100];
-	int i = 0;
+	int i, j;
+	i = 0;
 	while (a != 0) {
 		int temp = 0;
 		temp = a%16;
@@ -16,8 +17,8 @@ void intToHex(int a){
 		}
 		a = a/16;
 	}
-	int j = i - 1;
-	for (; j >= 0; j--)
+	j = i - 1;
+	for (j; j >= 0; j--)
 		PrintChar(hex[j]);
 }
 
