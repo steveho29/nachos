@@ -16,7 +16,8 @@ void intToHex(int a){
 		}
 		a = a/16;
 	}
-	for (int j = i - 1; j >= 0; j--)
+	int j = i - 1;
+	for (; j >= 0; j--)
 		PrintChar(hex[j]);
 }
 
