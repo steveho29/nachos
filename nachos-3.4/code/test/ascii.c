@@ -35,5 +35,6 @@ int main() {
 		PrintChar(i);
 		PrintChar('\n');
 	}
+	
 	Halt();
 }
