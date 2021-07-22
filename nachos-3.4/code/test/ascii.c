@@ -24,17 +24,16 @@ void intToHex(int a){
 
 int main() {
 	int i = 32;
-	PrintString("-----Ascii Table----");
-	PrintString("  Dec    Hex    Char");
+	PrintString("-----Ascii Table----\n");
+	PrintString("Dec     Hex     Char\n");
 	for (;i<128;i++) {
-		PrintString("   ");
 		PrintInt((int)i);
-		PrintString("    ");
+		PrintString("     ");
 		intToHex(i);
 		PrintString("     ");
 		PrintChar(i);
 		PrintChar('\n');
 	}
-	
+
 	Halt();
 }
