@@ -12,13 +12,12 @@
 
 int main()
 { 
-
     int i, n, num, j, tmp, A[100];
     PrintString("Input N <= 100: ");
     n = ReadInt();
-    i = 0;
 
-    for (;i<n;i++){
+    i = 0;
+    for (i = 0;i<n;i++){
         PrintString("A[");
         PrintChar(((char)i + 48));
         PrintString("]: ");

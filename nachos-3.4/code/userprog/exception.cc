@@ -394,5 +394,4 @@ void ExceptionHandler(ExceptionType which)
 	
 	advancePC();
 
-   
 }	
