@@ -1,7 +1,7 @@
 #include "syscall.h"
 
 int main(){
-	char str[200];
+	char* str;
 	PrintString("Input your string: ");
 	ReadString(str, 200);
 	PrintString("This is my string: ");

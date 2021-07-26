@@ -15,7 +15,9 @@ int main()
     int i, n, num, j, tmp, A[100];
     PrintString("Input N <= 100: ");
     n = ReadInt();
-
+    if (n > 100){
+	Halt();
+    }
     i = 0;
     for (i = 0;i<n;i++){
         PrintString("A[");

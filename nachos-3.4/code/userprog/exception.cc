@@ -116,10 +116,11 @@ char* readString(){
 	str = new char [limit+1];
 	numBytes = gSynchConsole->Read(str, limit);
 
-	if (numBytes >= 0)
+	if (numBytes > 0)
 		// Copy buffer tu System vao User voi so byte = numBytes doc duoc tu console
 		System2User(virtAddr, numBytes,  str);
 	else
+		str[0] = '\0';
 		printf("Console ERROR\n\n");
 
 	return str;
@@ -133,7 +134,8 @@ void printString(){
 
 	// Lay dia chi luu chuoi cua USER
 	virtAddr = machine->ReadRegister(4);
-
+	
+	
 	// Khoi tao kernel buffer. Copy chuoi tu user sang kernel buffer
 	buffer = User2System(virtAddr, 200); 
 
