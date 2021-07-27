@@ -104,7 +104,7 @@ char* User2System(int virtAddr, int limit){
 char* readString(){
 	int virtAddr, limit, numBytes;
 	char* str;
-
+	numBytes = 0;
 	// Dia chi luu chuoi cua USER
 	virtAddr = machine->ReadRegister(4); 
 
@@ -115,14 +115,16 @@ char* readString(){
 	// Lay duoc so ki tu doc duoc
 	str = new char [limit+1];
 	numBytes = gSynchConsole->Read(str, limit);
-
-	if (numBytes > 0)
+	
+	if (numBytes > 0){
 		// Copy buffer tu System vao User voi so byte = numBytes doc duoc tu console
 		System2User(virtAddr, numBytes,  str);
-	else
+	}
+	else{
 		str[0] = '\0';
-		printf("Console ERROR\n\n");
-
+		printf("Console ERROR!\n\n");
+	}
+	
 	return str;
 }
 
@@ -184,7 +186,10 @@ int readInt(){
 	int num = 0, digit, numBytes, limit = 200;
 
 	int MAX_INT = 2147483647, MIN_INT = -2147483648;
+	
+	// Su dung bien tam kieu long long de kiem tra so nhap vao co overflow kieu integer khong
 	long long tmp = 0;
+
 	char* buffer;
 	bool isNegative = false;
 
@@ -243,7 +248,7 @@ int readInt(){
 
 void printInt(){
 	int num = machine->ReadRegister(4);
-	// Neu la sp duong lon hon 0
+	// Neu la so duong lon hon 0
 	if (0 <= num && num <= 9)
 	{	
 		char ch = (char)(num+48);
@@ -259,12 +264,14 @@ void printInt(){
 
 	char* buffer = new char[limit+1];
 	bool isNegative = false;
-
+	
+	// Kiem tra co phai so am khong
 	if (num < 0){
 		isNegative = true;
 		num = -num;
 	}
-
+	
+	// Lay ra cac chu so tu phai sang trai
 	while (num > 0){
 		buffer[n] = (char)(num%10 + 48);
 		num /= 10;
@@ -274,6 +281,7 @@ void printInt(){
 
 	int i = 0;
 	char* number;
+	// Neu la so am thi them dau - phia truoc
 	if (isNegative)
 	{	
 		++n;
@@ -282,14 +290,16 @@ void printInt(){
 		number[0] = '-';
 	}
 	else number = new char[n+1];
-
+	
+	// Chuyen cac chu so doc duoc vao chuoi theo dung thu tu de in ra
 	for (;i<n;i++)
 		number[i] = buffer[n-i-1];
 
 
 	// In ra man hinh console
 	gSynchConsole->Write(number, n);
-
+	
+	// Giai phong vung nho
 	delete buffer;
 	delete number;
 }
@@ -365,7 +375,7 @@ void ExceptionHandler(ExceptionType which)
 				case SC_ReadChar:
 					char ch;
 					ch = readChar();
-					machine->WriteRegister(2, int(ch));
+					machine->WriteRegister(2, int(ch)); // Ghi ki tu vao thanh ghi so 2 duoi dang so int
 					break;
 
 

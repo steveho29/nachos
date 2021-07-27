@@ -15,9 +15,13 @@ int main()
     int i, n, num, j, tmp, A[100];
     PrintString("Input N <= 100: ");
     n = ReadInt();
+
+    // Neu so luong phan tu > 100 thi ket thuc chuong trinh
     if (n > 100){
 	Halt();
     }
+
+    // Nhap vao n phan tu cua mang
     i = 0;
     for (i = 0;i<n;i++){
         PrintString("A[");
@@ -26,6 +30,7 @@ int main()
         A[i] = ReadInt();
     }
 
+    // Bubble sort mang A vua nhap vao
     for (i = 0;i<n-1;i++)
         for (j = 0;j<n-i-1;j++)
             if (A[j] > A[j+1]){
